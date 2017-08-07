@@ -1,6 +1,6 @@
 {
   "name": "harreplayer",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "A web server that replays HTTP archive (HAR) files",
   "main": "index.js",
   "keywords": [
