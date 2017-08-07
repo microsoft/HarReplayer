@@ -1,0 +1,21 @@
+{  
+   "ListenPort":8084,
+   "CacheLifetime":60,
+   "InjectJavascript":"window.Math.random = function() {return 0;}",
+   "QueryParamsToIgnore":"",
+   "UrlReplacements": [
+      {
+         "regex": "/[0-9a-fA-F]{8}",
+         "replacement": "/00000000" 
+      },
+      {
+         "regex": "/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+         "replacement": "" 
+      }
+   ],
+   "AzureStorageAccountName":"",
+   "AzureStorageAccessKey":"",
+   "AzureStorageContainerName":"",
+   "HarFilePath":"D:\\Temp\\harfiles\\",
+   "LoggingLevel":"info"
+}

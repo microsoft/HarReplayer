@@ -1,0 +1,49 @@
+{
+  "name": "harreplayer",
+  "version": "1.0.17",
+  "description": "A web server that replays HTTP archive (HAR) files",
+  "main": "index.js",
+  "keywords": [
+    "HTTP Archive",
+    "Microsoft",
+    "performance",
+    "replay",
+    "proxy",
+    "server"
+  ],
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reganp/HarReplayer.git"
+  },
+  "author": "Microsoft Corp.",
+  "license": "MIT",
+  "dependencies": {
+    "@types/jasmine": "^2.5.52",
+    "@types/karma-fixture": "^0.2.2",
+    "@types/node": "^6.0.78",
+    "azure-storage": "^2.2.0",
+    "base64-js": "^1.2.0",
+    "chai": "^4.0.2",
+    "express": "^4.15.3",
+    "json-parser": "^1.1.5",
+    "mocha": "^3.4.2",
+    "node-datetime": "^1.0.1",
+    "query-string": "^4.3.4",
+    "serializer.ts": "0.0.12",
+    "sinon": "^2.3.8",
+    "string-builder": "^0.1.4",
+    "supertest": "^3.0.0",
+    "winston": "^2.3.1",
+    "xregexp": "^3.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.1.6"
+  },
+  "bugs": {
+    "url": "https://github.com/reganp/HarReplayer/issues"
+  },
+  "homepage": "https://github.com/reganp/HarReplayer#readme"
+}
