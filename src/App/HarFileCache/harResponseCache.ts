@@ -82,7 +82,7 @@ export default class HarResponseCache {
 
       if (this.usingAzureStorage)
       {
-        this.azureStorageHarLookup.FindFromRequest(harFileName, onHarFileFound);
+        onHarFileFound(harFileName); // don't bother finding the file, just attempt download immediately (Bugfix Issue #2)
       }
       else {
         this.diskHarLookup.FindFromRequest(harFileName, onHarFileFound);
