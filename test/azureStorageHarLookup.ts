@@ -36,24 +36,4 @@ describe("Azure storage har lookup tests", () => {
         
         subject.LoadFile("testfilename", onDownloaded);
     });
-
-    it("validates null response when matching har file cannot be found in Azure storage", function(done) {
-
-        var onHarFileFound = (function(content: string) {
-            assert.equal(content === null, true);
-            done();
-        });
-
-        subject.FindFromRequest("made up filename", onHarFileFound);
-    });
-
-    it("validates matching har file can be found in Azure storage", function(done) {
-      
-        var onHarFileFound = (function(content: string) {
-            assert.equal(content === testFilename, true);
-            done();
-        });
-        
-        subject.FindFromRequest(testFilename, onHarFileFound);
-    });
 });
