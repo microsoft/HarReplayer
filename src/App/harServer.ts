@@ -46,8 +46,6 @@ export function start(listenPort: number, listenPortSSL: number, sslKeyLocation:
     responseObj.setHeader('Pragma', 'no-cache');
     responseObj.statusCode = 200;
     responseObj.end(responseBytes);
-
-    Logger.Instance().Log('info', 'response success');
   }
   
   function setConfigFromArgs(listenPort: number, listenPortSSL: number, sslKeyLocation: string, sslCertLocation: string, injectJavascript: string, cacheLifetime: number, queryParamsToIgnore: string, azureStorageAccountName: string,
@@ -111,10 +109,6 @@ export function start(listenPort: number, listenPortSSL: number, sslKeyLocation:
       response.end();
     }
     else {
-
-
-      Logger.Instance().Log('info', 'request received');
-
       var harFileName: string = getHarFileNameFromHeaders(request);
       if (!harFileName) {  
         var originIPAddress: string = request.ip;
@@ -170,7 +164,6 @@ export function start(listenPort: number, listenPortSSL: number, sslKeyLocation:
   function sendErrorResponse(response) {
     response.statusCode = 404;
     response.end();
-    Logger.Instance().Log('info', 'response error');
   }
 
   function getHarFileNameFromUrlParams(url: string): string {
