@@ -5,6 +5,9 @@ var path = require('path');
 interface IUrlReplacement extends Array<string | string> { regex: string; replacement: string; }
 export default class Config extends base.JsonFileLoader {
   ListenPort: number;
+  ListenPortSSL: number;
+  SSLKeyLocation: string;
+  SSLCertLocation: string;
   CacheLifetime: number;
   InjectJavascript: string;
   QueryParamsToIgnore: string;
@@ -39,6 +42,9 @@ export default class Config extends base.JsonFileLoader {
   
   protected initialize() {
     this.ListenPort = 8080;
+    this.ListenPortSSL = 4433;
+    this.SSLKeyLocation = '';
+    this.SSLCertLocation = '';
     this.CacheLifetime = 60; // one minute
     this.InjectJavascript = '_w.Math.random = function() {return 0;}; var d = new Date(2012, 2, 2); _w.Date = function() { return d; };';
     this.QueryParamsToIgnore = 'clientip,superforkersessionguid,bag';
@@ -58,6 +64,15 @@ export default class Config extends base.JsonFileLoader {
   protected deserialize(json: string) {
     if (json.hasOwnProperty('ListenPort')) {
       this.ListenPort = json['ListenPort'];
+    }
+    if (json.hasOwnProperty('ListenPortSSL')) {
+      this.ListenPortSSL = json['ListenPortSSL'];
+    }
+    if (json.hasOwnProperty('SSLKeyLocation')) {
+      this.SSLKeyLocation = json['SSLKeyLocation'];
+    }
+    if (json.hasOwnProperty('SSLCertLocation')) {
+      this.SSLCertLocation = json['SSLCertLocation'];
     }
     if (json.hasOwnProperty('CacheLifetime')) {
       this.CacheLifetime = json['CacheLifetime'];

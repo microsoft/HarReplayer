@@ -25,6 +25,12 @@ After launching the HarReplayer, you can verify it's up by calling the HarReplay
 ## Config settings (describes the settings loaded from /config/config.json)
 ListenPort: The port you want the HarReplayer to listen on.  Defaults to 8080.
 
+ListenPortSSL: The port you want the HarReplayer to listen on using SSL.  Defaults to 4433.
+
+SSLKeyLocation: The disk location of the SSL server key file.
+
+SSLCertLocation: The disk location of the SSL server certificate file.
+
 CacheLifetime: The amount of time in seconds to store HAR files in the HarReplayer's cache.  After loading a HAR file from disk / Azure storage, this is the amount of time that the file will remain in the cache since it was last accessed (page load).  Defaults to 60.
 
 InjectJavascript: Use this to inject javascript into your initial response's Html head, prior to serving to client browser.  This can be useful for performance testing, as you can use it to overwrite indeterminate javascript code such as 'window.Math.random' function.  Defaults to 'window.Math.random = function() {return 0;}'

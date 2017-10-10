@@ -1,6 +1,9 @@
 import * as harServer from "./src/App/harserver.js";
 
 var listenPort: number = null;
+var listenPortSSL: number = null;
+var sslKeyLocation: string = null;
+var sslCertLocation: string = null;
 var cacheLifetime: number = null;
 var injectJavascript: string = null;
 var queryParamsToIgnore: string = null;
@@ -15,6 +18,15 @@ for (var arg in process.argv) {
     if (process.argv.length > index + 1) {
         if (process.argv[arg].toLowerCase() == '--listenport') {
             listenPort = parseInt(process.argv[index + 1]);
+        }
+        else if (process.argv[arg].toLowerCase() == '--listenportssl') {
+            listenPortSSL = parseInt(process.argv[index + 1]);
+        }
+        else if (process.argv[arg].toLowerCase() == '--sslkeylocation') {
+            sslKeyLocation = process.argv[index + 1];
+        }
+        else if (process.argv[arg].toLowerCase() == '--sslcertlocation') {
+            sslCertLocation = process.argv[index + 1];
         }
         else if (process.argv[arg].toLowerCase() == '--injectjavascript') {
             injectJavascript = process.argv[index + 1];
@@ -43,4 +55,4 @@ for (var arg in process.argv) {
     }
 }
 
-harServer.start(listenPort, injectJavascript, cacheLifetime, queryParamsToIgnore, azureStorageAccountName, azureStorageAccessKey, azureStorageContainerName, harfilepath, loggingLevel, null);
+harServer.start(listenPort, listenPortSSL, sslKeyLocation, sslCertLocation, injectJavascript, cacheLifetime, queryParamsToIgnore, azureStorageAccountName, azureStorageAccessKey, azureStorageContainerName, harfilepath, loggingLevel, null);
