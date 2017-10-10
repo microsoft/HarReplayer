@@ -31,7 +31,13 @@ export function start(listenPort: number, listenPortSSL: number, sslKeyLocation:
     for (var i=0; i<harFileEntry.Response.Headers.length; i++) {
       var header: Header = harFileEntry.Response.Headers[i];
       if (header.name !== 'Content-Encoding') { //Prevent "ERR_CONTENT_DECODING_FAILED".  Har files get saved with content-encoding set to gzip but contents are not gzipped.
-        responseObj.setHeader(header.name, header.value);
+        if (header.name === 'Content-Length')
+          {
+            responseObj.setHeader(header.name, responseBytes.length);
+          }
+          else {
+            responseObj.setHeader(header.name, header.value);
+          }
       }
     }
 

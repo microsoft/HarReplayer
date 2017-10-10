@@ -18,7 +18,7 @@
 	],
 	"AzureStorageAccessKey": "",
 	"AzureStorageAccountName": "",
-	"AzureStorageContainerName": "",
-	"LoggingLevel": "info",
-	"HarFilePath": "test\\dependencies\\"
+    "AzureStorageContainerName": "",
+    "HarFilePath": "D:\\Temp\\harfiles",
+	"LoggingLevel": "info"
 }

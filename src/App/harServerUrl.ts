@@ -33,7 +33,6 @@ export default class harServerUrl {
 
     public PropertiesMatch(obj1: Object, obj2: Object): boolean {
         if (Object.keys(obj1).length !== Object.keys(obj2).length) {
-            Logger.Instance().Log("info", "key length mismatch");
             return false;
         }
         
@@ -43,18 +42,15 @@ export default class harServerUrl {
                     continue; // both values are null, they match, so continue to the next key
                 }
 
-                Logger.Instance().Log("info", "shitty mismatch");
                 return false;
             }
 
             if (obj1[key].constructor === Array && obj2[key].constructor === Array) {
                 if (!this.PropertiesMatch(obj1[key], obj2[key])) {
-                    Logger.Instance().Log("info", "property mismatch");
                     return false;
                 }
             }
             else if (obj1[key] !== obj2[key]) {
-                Logger.Instance().Log("info", "key mismatch");
                 return false;
             }    
         }
