@@ -14,6 +14,9 @@ describe("Config tests", () => {
         assert.equal(configInstance.HarFilePath === "test\\dependencies\\", true);
         assert.equal(configInstance.InjectJavascript === "window.Math.random = function() {return 0;}", true);
         assert.equal(configInstance.ListenPort === 8084, true);
+        assert.equal(configInstance.ListenPortSSL === 4433, true);
+        assert.equal(configInstance.SSLKeyLocation === "sslkeypath", true);
+        assert.equal(configInstance.SSLCertLocation === "sslcertpath", true);
         assert.equal(configInstance.LoggingLevel === "info", true);
         assert.equal(configInstance.QueryParamsToIgnore === "", true);
         assert.equal(configInstance.UrlReplacements.length === 2, true);

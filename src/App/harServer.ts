@@ -10,21 +10,22 @@ import * as urlParser from "url"
 import * as queryString from 'query-string';
 import Header from "./HarFile/header.js";
 
-var server = null;
+var https = require('https');
+var http = require('http');
+
+var httpServer, httpsServer = null;
 var config: Config = Config.Instance();
 var harFileList: HarFileList;
 
-export function start(listenPort: number, injectJavascript: string, cacheLifetime: number, queryParamsToIgnore: string, azureStorageAccountName: string,
+export function start(listenPort: number, listenPortSSL: number, sslKeyLocation: string, sslCertLocation: string, injectJavascript: string, cacheLifetime: number, queryParamsToIgnore: string, azureStorageAccountName: string,
  azureStorageAccessKey: string, azureStorageContainerName: string, harfilepath: string, loggingLevel: string, urlReplacements: any): express {
 
-  setConfigFromArgs(listenPort, injectJavascript, cacheLifetime, queryParamsToIgnore, azureStorageAccountName, azureStorageAccessKey, azureStorageContainerName, harfilepath, loggingLevel, urlReplacements);
+  setConfigFromArgs(listenPort, listenPortSSL, sslKeyLocation, sslCertLocation, injectJavascript, cacheLifetime, queryParamsToIgnore, azureStorageAccountName, azureStorageAccessKey, azureStorageContainerName, harfilepath, loggingLevel, urlReplacements);
 
   var app = express();
   this.harFileList = new HarFileList();
-  if (server !== null) {
-    module.exports.stop();
-  }
-
+  module.exports.stop();
+  
   function sendResponse(responseObj, responseBytes: Buffer, harFileEntry: Entry) {
 
     for (var i=0; i<harFileEntry.Response.Headers.length; i++) {
@@ -39,13 +40,27 @@ export function start(listenPort: number, injectJavascript: string, cacheLifetim
     responseObj.setHeader('Pragma', 'no-cache');
     responseObj.statusCode = 200;
     responseObj.end(responseBytes);
+
+    Logger.Instance().Log('info', 'response success');
   }
   
-  function setConfigFromArgs(listenPort: number, injectJavascript: string, cacheLifetime: number, queryParamsToIgnore: string, azureStorageAccountName: string,
+  function setConfigFromArgs(listenPort: number, listenPortSSL: number, sslKeyLocation: string, sslCertLocation: string, injectJavascript: string, cacheLifetime: number, queryParamsToIgnore: string, azureStorageAccountName: string,
     azureStorageAccessKey: string, azureStorageContainerName: string, harfilepath: string, loggingLevel: string, urlReplacements: any) {
 
     if (listenPort) {
       config.ListenPort = listenPort;
+    }
+
+    if (listenPortSSL) {
+      config.ListenPortSSL = listenPortSSL;
+    }
+
+    if (sslKeyLocation) {
+      config.SSLKeyLocation = sslKeyLocation;
+    }
+
+    if (sslCertLocation) {
+      config.SSLCertLocation = sslCertLocation;
     }
 
     if (injectJavascript) {
@@ -90,6 +105,10 @@ export function start(listenPort: number, injectJavascript: string, cacheLifetim
       response.end();
     }
     else {
+
+
+      Logger.Instance().Log('info', 'request received');
+
       var harFileName: string = getHarFileNameFromHeaders(request);
       if (!harFileName) {  
         var originIPAddress: string = request.ip;
@@ -145,6 +164,7 @@ export function start(listenPort: number, injectJavascript: string, cacheLifetim
   function sendErrorResponse(response) {
     response.statusCode = 404;
     response.end();
+    Logger.Instance().Log('info', 'response error');
   }
 
   function getHarFileNameFromUrlParams(url: string): string {
@@ -177,23 +197,45 @@ export function start(listenPort: number, injectJavascript: string, cacheLifetim
   app.get('*', requestHandler);
   app.post('*', postHandler);
   
-  server = app.listen(config.ListenPort, (err) => {
+
+  function appCallback(err, listenPort: number, protocol: string) {
     if (err) {
-      return Logger.Instance().Log('error', 'Can\'t listen on port' + config.ListenPort);
+      return Logger.Instance().Log('error', 'Can\'t listen on port' + listenPort);
     }
 
-    Logger.Instance().Log('info', 'server is listening on ' + config.ListenPort);
-  })
+    Logger.Instance().Log('info', protocol + ' server is listening on ' + listenPort);
+  }
+  
+  httpServer = http.createServer(app).listen(config.ListenPort, (err) => appCallback(err, config.ListenPort, "HTTP"))
+  
+  if (fs.existsSync(config.SSLKeyLocation) && fs.existsSync(config.SSLCertLocation)) {
+    var httpsOptions = {
+      key: fs.readFileSync(config.SSLKeyLocation),
+      cert: fs.readFileSync(config.SSLCertLocation)
+    };
+
+    httpsServer = https.createServer(httpsOptions, app).listen(config.ListenPortSSL, (err) => appCallback(err, config.ListenPortSSL, "HTTPS"))
+  }
+  else {
+    Logger.Instance().Log('info', 'Couldn\'t find certificate files - SSL not available.')
+  }
 
   return app;
 }
 
 export function stop() {
   config.Save();
-  if (server != null) {
-    server.close();
-    server = null;
+
+  function stopServer(server, protocol) {
+    if (server != null) {
+      server.close();
+      server = null;
+      
+      Logger.Instance().Log('info', protocol + ' server connection closed');
+    }
   }
 
-  Logger.Instance().Log('info', 'server connection closed');
+  stopServer(httpServer, 'HTTP');
+  stopServer(httpsServer, 'HTTPS');
+  
 }
