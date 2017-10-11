@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import config from "../src/app/config";
 import * as testhelper from "./testhelper.js";
 import * as chai from "chai";

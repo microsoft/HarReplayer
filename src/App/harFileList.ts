@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import Entry from "./harFile/entry.js";
 import HarFile from "./harFile/harFile.js";
 import Config from "./config.js";

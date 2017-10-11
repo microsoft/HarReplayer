@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import HarFile from "../src/app/harFile/harFile.js";
 import config from "../src/app/config";
 import DiskHarLookup from "../src/app/diskHarLookup.js";

@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import * as express from "express";
 import config from "../src/app/config";
 import * as harServer from "../src/App/harserver.js";

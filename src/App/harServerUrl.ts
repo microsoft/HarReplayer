@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import Config from "./config.js";
 import * as queryString from 'query-string';
 import * as urlParser from "url"

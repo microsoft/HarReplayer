@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import config from "../src/app/config";
 var sinon = require('sinon');  
 import AzureStorageHarLookup from "../src/app/azureStorageHarLookup.js";
