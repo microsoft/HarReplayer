@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import * as base64 from "base64-js";
 import Logger from "./../logger.js";
 import Header from "./header.js";

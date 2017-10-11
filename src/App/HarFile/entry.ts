@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import HarFile from "./harFile.js";
 import Request from "./request.js";
 import Response from "./response.js";

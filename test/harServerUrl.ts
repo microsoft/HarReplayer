@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import * as chai from "chai";
 import harServerUrl from "../src/app/harServerUrl.js"
 import config from "../src/app/config";

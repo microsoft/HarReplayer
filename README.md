@@ -52,3 +52,7 @@ HarFilePath: The folder to load HAR files from disk.
 
 ## Overwriting config settings in command line
 The settings in '/config/config.json' can be overwritten by specifying their overrides in the command line when starting the HarReplayer server, e.g. node index.js --listenport 8080
+
+
+## Microsoft Open Source Code of Conduct
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

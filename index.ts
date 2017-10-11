@@ -1,3 +1,4 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.// Licensed under the MIT license.
 import * as harServer from "./src/App/harserver.js";
 
 var listenPort: number = null;
