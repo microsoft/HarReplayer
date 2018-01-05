@@ -13,6 +13,7 @@ import Header from "./HarFile/header.js";
 
 var https = require('https');
 var http = require('http');
+var compression = require('compression');
 
 var httpServer, httpsServer = null;
 var config: Config = Config.Instance();
@@ -24,6 +25,7 @@ export function start(listenPort: number, listenPortSSL: number, sslKeyLocation:
   setConfigFromArgs(listenPort, listenPortSSL, sslKeyLocation, sslCertLocation, injectJavascript, cacheLifetime, queryParamsToIgnore, azureStorageAccountName, azureStorageAccessKey, azureStorageContainerName, harfilepath, loggingLevel, urlReplacements);
 
   var app = express();
+  app.use(compression());
   this.harFileList = new HarFileList();
   module.exports.stop();
   
@@ -31,7 +33,7 @@ export function start(listenPort: number, listenPortSSL: number, sslKeyLocation:
 
     for (var i=0; i<harFileEntry.Response.Headers.length; i++) {
       var header: Header = harFileEntry.Response.Headers[i];
-      if (header.name !== 'Content-Encoding') { //Prevent "ERR_CONTENT_DECODING_FAILED".  Har files get saved with content-encoding set to gzip but contents are not gzipped.
+      if (header.name !== 'Content-Encoding') { //Prevent "ERR_CONTENT_DECODING_FAILED".  This happens when setting content-encoding response header.
         if (header.name === 'Content-Length')
           {
             responseObj.setHeader(header.name, responseBytes.length);
