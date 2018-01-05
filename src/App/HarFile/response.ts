@@ -42,12 +42,7 @@ export default class Response {
         }
         else {
             if (this.content_text && this.content_text.length > 0) {
-                if (this.content_encoding == "base64") {
-                    this.contentBuffer = new Buffer(base64.toByteArray(this.content_text));
-                }
-                else {
-                    this.contentBuffer = new Buffer(this.content_text, 'utf8');
-                }
+                this.contentBuffer = new Buffer(this.content_text, this.content_encoding);
             }
 
             return this.contentBuffer;
