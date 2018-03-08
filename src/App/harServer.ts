@@ -33,7 +33,7 @@ export function start(listenPort: number, listenPortSSL: number, sslKeyLocation:
 
     for (var i=0; i<harFileEntry.Response.Headers.length; i++) {
       var header: Header = harFileEntry.Response.Headers[i];
-      if (header.name !== 'Content-Encoding') { //Prevent "ERR_CONTENT_DECODING_FAILED".  This happens when setting content-encoding response header.
+      if (header.name.toLowerCase() !== 'content-encoding') { //Prevent "ERR_CONTENT_DECODING_FAILED".  This happens when setting content-encoding response header.
         if (header.name === 'Content-Length')
           {
             responseObj.setHeader(header.name, responseBytes.length);
