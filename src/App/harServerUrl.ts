@@ -60,7 +60,33 @@ export default class harServerUrl {
     }
 
     private SanitizeUrl(parsedUrl) {
-        this.queryParams = queryString.parse(parsedUrl.query);
+      
+        var query = parsedUrl.query;
+        function parseQuery(query: string): Object {
+          var parsedQuery: Array<string | string> = [];
+          var params: string[] = query.split('&');
+          for (var i=0; i<params.length; i++) {
+            var param: string = params[i];
+            var keyValue: string[] = param.split('=');
+            var key = keyValue[0];
+            var value = keyValue[1];
+            if (!parsedQuery[key]) {
+              parsedQuery[key] = value;
+            }
+            else {
+              parsedQuery[key] += ',' + value;
+            }
+          }
+      
+          return parsedQuery;
+        }
+
+        try {
+            this.queryParams = queryString.parse(parsedUrl.query);        
+        }
+        catch { // backup method that won't throw 'malformed URI' exception
+            this.queryParams = parseQuery(parsedUrl.query);
+        }
 
         var queryParamsToIgnore = this.config.QueryParamsToIgnore.split(',');
         queryParamsToIgnore.push('harfileid');
