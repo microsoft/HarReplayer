@@ -30,7 +30,7 @@
     "express": "^4.16.2",
     "https": "^1.0.0",
     "json-parser": "^1.1.5",
-    "mocha": "^3.4.2",
+    "mocha": "^10.2.0",
     "node-datetime": "^1.0.1",
     "query-string": "^4.3.4",
     "serializer.ts": "0.0.12",
